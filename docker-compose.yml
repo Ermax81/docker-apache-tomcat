@@ -1,0 +1,30 @@
+##### -> Source: https://github.com/Paritosh-Anand/Docker-Httpd-Tomcat
+#Source: https://hub.docker.com/r/nasoym/httpd-mod_jk/dockerfile
+#Source: https://hub.docker.com/_/httpd?tab=tags
+#Source: https://hub.docker.com/_/tomcat?tab=tags&page=1&name=9
+#Source: https://github.com/dhanugupta/apache-mod-uk-tomcat-docker
+
+version: "3"
+services:
+  
+  apache:
+    image: httpd-mod_jk
+    build: apache/.
+    container_name: apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./apache/htdocs:/usr/local/apache2/htdocs
+      - ./apache/logs:/usr/local/apache2/logs
+      - ./apache/conf:/usr/local/apache2/conf
+
+  tomcat:
+    image: tomcat:jre11
+    container_name: tomcat
+    ports:
+      - "8009:8009"  #AJP13 Connector Apache-Tomcat
+      - "8080:8080"
+    volumes:
+      - ./tomcat/webapps:/usr/local/tomcat/webapps
+      - ./tomcat/logs:/usr/local/tomcat/logs
+      - ./tomcat/conf:/usr/local/tomcat/conf
